@@ -13,15 +13,17 @@ const {
 
 // main routes
 router.get('/', listContents)
+// Other routes
+router.get('/popular', getPopularContents)
+router.get('/last-added', getLastAddedContents)
+
 router.get('/:id', getContent)
 router.get('/title/:title', getContentByTitle)
 router.post('/', createContent)
 router.patch('/:id', updateContent)
 router.delete('/:id', deleteContent)
 
-// Other routes
-router.get('/popular', getPopularContents)
-router.get('/last-added', getLastAddedContents)
+
 
 
 module.exports = router

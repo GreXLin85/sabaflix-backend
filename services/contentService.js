@@ -1,5 +1,7 @@
 const models = require('../models/index');
 
+
+
 module.exports = {
     listContents: async () => {
         try {
@@ -34,9 +36,12 @@ module.exports = {
     },
     getPopularContents: async () => {
         try {
-            return await models.Content.findAll({ order: [["rank", "DESC"]], limit: 11, include: ["contentCategory"] });
-
+            console.log("getPopularContents");
+            let Content = await models.Content.findAll({ order: [["rank", "DESC"]], limit: 11, include: ["contentCategory"], where: {} });
+            console.log(Content);
+            return Content;
         } catch (error) {
+            console.log(error);
             throw error;
         }
     },
@@ -51,18 +56,19 @@ module.exports = {
         title,
         titleLogo,
         background,
+        banner,
         price,
         description,
         categoryId,
         rank,
-        isOriginal,
-        isSeries,
+        isOriginal = false,
+        isSeries = false,
         buyLink,
         moreInfoLink,
     }) => {
         try {
             // Check all required fields are present
-            if (!title || !titleLogo || !background || !price || !description || !categoryId || !rank || !isOriginal || !isSeries || !buyLink || !moreInfoLink) {
+            if (!title || !titleLogo || !banner || !background || !price || !description || !categoryId || !rank || !buyLink || !moreInfoLink) {
                 throw new Error("Missing required fields");
             }
             // Check if content with same title already exists
@@ -80,7 +86,20 @@ module.exports = {
                 throw new Error("Rank must be between 0 and 100");
             }
 
-            return await models.Content.create(contentData);
+            return await models.Content.create({
+                title,
+                titleLogo,
+                background,
+                banner,
+                price,
+                description,
+                categoryId,
+                rank,
+                isOriginal,
+                isSeries,
+                buyLink,
+                moreInfoLink,
+            });
         } catch (error) {
             throw error;
         }
@@ -89,18 +108,21 @@ module.exports = {
         title,
         titleLogo,
         background,
+        banner,
         price,
         description,
         categoryId,
         rank,
-        isOriginal,
-        isSeries,
+        isOriginal = false,
+        isSeries = false,
         buyLink,
         moreInfoLink,
     }) => {
         try {
+            console.log({title, titleLogo, background, banner, price, description, categoryId, rank, isOriginal, isSeries, buyLink, moreInfoLink});
+
             // Check all required fields are present
-            if (!title || !titleLogo || !background || !price || !description || !categoryId || !rank || !isOriginal || !isSeries || !buyLink || !moreInfoLink) {
+            if (!title || !titleLogo || !banner || !background || !price || !description || !categoryId || !rank || !buyLink || !moreInfoLink) {
                 throw new Error("Missing required fields");
             }
             // Check if content exists
@@ -118,7 +140,20 @@ module.exports = {
                 throw new Error("Rank must be between 0 and 100");
             }
 
-            return await models.Content.update(contentData, { where: { id } });
+            return await models.Content.update({
+                title,
+                titleLogo,
+                background,
+                banner,
+                price,
+                description,
+                categoryId,
+                rank,
+                isOriginal,
+                isSeries,
+                buyLink,
+                moreInfoLink,
+            }, { where: { id } });
         } catch (error) {
             throw error;
         }

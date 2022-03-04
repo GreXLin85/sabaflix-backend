@@ -1,68 +1,88 @@
 const contentService = require('../services/contentService');
 
+const ErrorService = require("../services/ErrorService");
+const MessageService = require("../services/MessageService");
+
 module.exports = {
     listContents: async (req, res) => {
         try {
             const contents = await contentService.listContents();
-           res.status(200).json({message: contents});
+            return MessageService(res, contents);
         } catch (error) {
-            res.status(500).json(error);
+            return ErrorService(res, {
+                message: error.message,
+            });
         }
     },
     getContent: async (req, res) => {
         try {
             const content = await contentService.getContent(req.params.id);
-            res.status(200).json({message: content});
+            return MessageService(res, content);
         } catch (error) {
-            res.status(500).json(error);
+            return ErrorService(res, {
+                message: error.message,
+            });
         }
     },
     getContentByTitle: async (req, res) => {
         try {
             const content = await contentService.getContentByTitle(req.params.title);
-           res.status(200).json({message: content});
+            return MessageService(res, content);
         } catch (error) {
-            res.status(500).json(error);
+            return ErrorService(res, {
+                message: error.message,
+            });
         }
     },
     getPopularContents: async (req, res) => {
         try {
             const contents = await contentService.getPopularContents();
-           res.status(200).json({message: contents});
+            return MessageService(res, contents);
         } catch (error) {
-            res.status(500).json(error);
+            console.log(error);
+            return ErrorService(res, {
+                message: error.message,
+            });
         }
     },
     getLastAddedContents: async (req, res) => {
         try {
             const contents = await contentService.getLastAddedContents();
-           res.status(200).json({message: contents});
+            return MessageService(res, contents);
         } catch (error) {
-            res.status(500).json(error);
+            return ErrorService(res, {
+                message: error.message,
+            });
         }
     },
     createContent: async (req, res) => {
         try {
             const content = await contentService.createContent(req.body);
-           res.status(200).json({message: content});
+            return MessageService(res, content);
         } catch (error) {
-            res.status(500).json(error);
+            return ErrorService(res, {
+                message: error.message,
+            });
         }
     },
     updateContent: async (req, res) => {
         try {
             const content = await contentService.updateContent(req.body);
-           res.status(200).json({message: content});
+            return MessageService(res, content);
         } catch (error) {
-            res.status(500).json(error);
+            return ErrorService(res, {
+                message: error.message,
+            });
         }
     },
     deleteContent: async (req, res) => {
         try {
             const content = await contentService.deleteContent(req.params.id);
-           res.status(200).json({message: content});
+            return MessageService(res, content);
         } catch (error) {
-            res.status(500).json(error);
+            return ErrorService(res, {
+                message: error.message,
+            });
         }
     },
 }

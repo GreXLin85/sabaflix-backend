@@ -11,13 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Content.belongsTo(models.ContentCategory, {
-        foreignKey: 'contentCategoryId',
+        foreignKey: 'categoryId',
+        onDelete: 'CASCADE',
+        as: 'contentCategory'
       });
     }
   };
   Content.init({
     title: DataTypes.STRING,
     titleLogo: DataTypes.STRING,
+    banner: DataTypes.STRING,
     background: DataTypes.STRING,
     price: DataTypes.INTEGER,
     description: DataTypes.STRING,

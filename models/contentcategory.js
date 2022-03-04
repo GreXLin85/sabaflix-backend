@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       ContentCategory.hasMany(models.Content, {
-        foreignKey: 'contentCategoryId',
+        foreignKey: 'categoryId',
         onDelete: 'CASCADE',
+        as: 'contents'
       });
     }
   };
