@@ -34,6 +34,16 @@ module.exports = {
             });
         }
     },
+    getMostPopularContent: async (req, res) => {
+        try {
+            const content = await contentService.getMostPopularContent();
+            return MessageService(res, content);
+        } catch (error) {
+            return ErrorService(res, {
+                message: error.message,
+            });
+        }
+    },
     getPopularContents: async (req, res) => {
         try {
             const contents = await contentService.getPopularContents();
@@ -55,6 +65,27 @@ module.exports = {
             });
         }
     },
+    getContentByIsOriginal: async (req, res) => {
+        try {
+            const contents = await contentService.getContentByIsOriginal();
+            return MessageService(res, contents);
+        } catch (error) {
+            return ErrorService(res, {
+                message: error.message,
+            });
+        }
+    },
+    getContentByIsSeries: async (req, res) => {
+        try {
+            const contents = await contentService.getContentByIsSeries();
+            return MessageService(res, contents);
+        } catch (error) {
+            return ErrorService(res, {
+                message: error.message,
+            });
+        }
+    },
+
     createContent: async (req, res) => {
         try {
             const content = await contentService.createContent(req.body);
@@ -67,9 +98,10 @@ module.exports = {
     },
     updateContent: async (req, res) => {
         try {
-            const content = await contentService.updateContent(req.body);
+            const content = await contentService.updateContent(req.params.id,req.body);
             return MessageService(res, content);
         } catch (error) {
+            console.log(error);
             return ErrorService(res, {
                 message: error.message,
             });
